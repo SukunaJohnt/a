@@ -1,14 +1,9 @@
---test
+
+game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("Ready"):FireServer()
 local replayName = "t.txt"
 	local startTime = tick()
 assert(isfile(replayName), "macro file name not found!")
 local macro = readfile(replayName)
-
-if not game:IsLoaded() then
-    game.Loaded:Wait()
-end
-
-game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("Ready"):FireServer()
 
 local replicatedStorage = game:GetService("ReplicatedStorage")
 local httpService = game:GetService("HttpService")
