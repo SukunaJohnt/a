@@ -1,4 +1,5 @@
-	local replayName = "t.txt"
+--test
+local replayName = "t.txt"
 	local startTime = tick()
 assert(isfile(replayName), "macro file name not found!")
 local macro = readfile(replayName)
@@ -16,14 +17,13 @@ local function stcf(s)
     return loadstring("return CFrame.new(" .. s .. ");")();
 end
 
---[[local function notif(title,text,icon)
+local function notif(title,text,icon)
 	game:GetService("StarterGui"):SetCore("SendNotification",{
 		Title = title, -- Required
 		Text = text, -- Required
 		Icon = icon -- Optional
 	})
 end 
-]]
 
 local function place(info)
 	local args = {
@@ -46,7 +46,9 @@ local function place(info)
 
 
 	 local function sell(info)
-		game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("SellUnit"):FireServer(info.character)
+		local player = game.Players.LocalPlayer.Name
+		local unitsell = workspace:WaitForChild("Unit"):WaitForChild(player):WaitForChild(info.character)
+		game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("SellUnit"):FireServer(unitsell)  
 	 end 
 
     local tower = 1
@@ -58,13 +60,13 @@ local function place(info)
         if (currentTask.time <= tick() - startTime) then 
 			 if currentTask.type == "CreateUnit" then 
             place(currentTask)
-			-- notif("Place Status","Place Successfully!","rbxassetid://13693399274")
+			notif("Place Status","Place Successfully!")
 			 elseif currentTask.type == "UpgradeUnit" then 
 				upgrade(currentTask)
-			--	notif("Upgrade Status","Upgrade Successfully!","rbxassetid://13693399274")
-			 elseif currentTask.type == "SellUntit" then 
+				notif("Upgrade Status","Upgrade Successfully!")
+			 elseif currentTask.type == "SellUnit" then 
 				sell(currentTask)
-			--	notif("Sell Status","Sell Successfully!","rbxassetid://13693399274")
+				notif("Sell Status","Sell Successfully!")
 			 end
 
             recordTowers[tower] = nil
